@@ -3,12 +3,12 @@ import math
 from yacs.config import CfgNode as CN
 
 _c = CN()
-_c.model_dim = 1024
+_c.model_dim = 1024  # 音频和视觉功能的所有层的隐藏大小被设置为1024
 _c.max_word_num = 20
-_c.max_frame_num = 64
+_c.max_frame_num = 64  # 设置视频𝑁𝑣的帧数为64
 _c.max_audio_num = 800
-_c.audio_dim = 128
-_c.chunk_num = 8
+_c.audio_dim = 128  # 默认音频长度设置为256
+_c.chunk_num = 8  # 将特征分成8个块，以提高模型的稳定性，最后对所有块的结果进行平均
 _c.core_dim = _c.model_dim // _c.chunk_num
 
 
@@ -17,12 +17,12 @@ _c.model = CN()
 _c.model.name = "MomentRetrievalModel"
 _c.model.model_dim = _c.model_dim
 _c.model.chunk_num = _c.chunk_num
-_c.model.use_negative = False
+_c.model.use_negative = False  # 没有使用负样本？
 _c.model.text_config = CN()
-_c.model.text_config.input_dim = 300
-_c.model.text_config.hidden_dim = _c.model_dim
+_c.model.text_config.input_dim = 300  # 文本输入维度为300
+_c.model.text_config.hidden_dim = _c.model_dim  # 隐藏层设置1024
 _c.model.video_config = CN()
-_c.model.video_config.input_dim = 500
+_c.model.video_config.input_dim = 500  # 视频输入维度500
 _c.model.video_config.hidden_dim = _c.model_dim
 _c.model.video_config.kernel_size = [1]
 _c.model.video_config.stride = [1]
